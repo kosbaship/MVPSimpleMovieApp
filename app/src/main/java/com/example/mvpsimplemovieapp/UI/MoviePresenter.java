@@ -3,7 +3,6 @@ package com.example.mvpsimplemovieapp.UI;
 import com.example.mvpsimplemovieapp.Models.MovieModel;
 
 public class MoviePresenter {
-//     TODO (4)
 //    اعمل تهيئه بانك تعرف الانترفيس وتبني انستراكور يستقبله
     MovieInterface mMovieInterface;
 
@@ -11,7 +10,6 @@ public class MoviePresenter {
         this.mMovieInterface = mMovieInterface;
     }
 
-//    TODO (5)
 //    ابني الداله اللي تجيب الداتا من المودل
     private MovieModel getMovieDetailsFromDB(){
         return new MovieModel(1,
@@ -26,8 +24,7 @@ public class MoviePresenter {
                         "the 19th century");
     }
 
-//        TODO (6)
-//    ابني الداله اللي هتبرط الداتا اللي جايه من المودل بالانترفيس
+
 //    والل هتستدعيها في الفيو
     public void getMovieDetails(){
         String mName = getMovieDetailsFromDB().getmMoviewName();
