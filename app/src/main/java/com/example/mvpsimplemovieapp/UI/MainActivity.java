@@ -6,34 +6,37 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mvpsimplemovieapp.Models.MovieModel;
 import com.example.mvpsimplemovieapp.R;
+import com.example.mvpsimplemovieapp.databinding.ActivityMainBinding;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    @BindView(R.id.tvname)
-    TextView tvname;
-    @BindView(R.id.tvdate)
-    TextView tvdate;
-    @BindView(R.id.tvdispcription)
-    TextView tvdispcription;
-    @BindView(R.id.getdatabtn)
-    Button getdatabtn;
+public class MainActivity extends AppCompatActivity{
 
     MovieViewModel mMovieViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        final ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
-        getdatabtn.setOnClickListener(this);
+
+
+        binding.getdatabtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMovieViewModel.getMovieDetails();
+
+            }
+        });
+
+
 
         //    TODO (7)
 //عرف اسم للفيومودل فوق وتعال اربطه بان الاكتفتي دي تسنط عليه عن طريق البروفايدر
@@ -46,23 +49,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 String name = mMovieModel.getmMoviewName();
                 String date = mMovieModel.getmMoviewDate();
                 String description = mMovieModel.getmMoviewDescription();
-                tvname.setText(name);
-                tvdate.setText(date);
-                tvdispcription.setText(description);
+                binding.tvname.setText(name);
+                binding.tvdate.setText(date);
+                binding.tvdispcription.setText(description);
             }
         });
 
     }
 
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        if(id == R.id.getdatabtn){
-            //                TODO (8)
-// خلي لما ندوس علي الزرار يخلي الفيومودل يجيب الداتا من الداتابيز وقول انا جبت داتا ولو اي حد بيتسنط يخدها
-            mMovieViewModel.getMovieDetails();
-        }
-    }
 
 
 }
