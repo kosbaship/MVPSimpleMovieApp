@@ -10,10 +10,13 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.mvpsimplemovieapp.Models.MovieModel;
 import com.example.mvpsimplemovieapp.R;
 import com.example.mvpsimplemovieapp.databinding.ActivityMainBinding;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +29,10 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         final ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
+
+        binding.recyclerviewtag.setLayoutManager(new LinearLayoutManager(this));
+        final MovieListAdapter adapter = new MovieListAdapter();
+        binding.recyclerviewtag.setAdapter(adapter);
 
 
         binding.getdatabtn.setOnClickListener(new View.OnClickListener() {
@@ -43,15 +50,10 @@ public class MainActivity extends AppCompatActivity{
         mMovieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
         //                TODO (9)
 // اتسنط علي الداتا اللي دوا الميوتابل لايف داتا ونقي منها معلوماتك واعرضها علي الفيو بمزاجك
-        mMovieViewModel.mMovieViewModelMutableLiveData.observe(this, new Observer<MovieModel>() {
+        mMovieViewModel.mMovieViewModelMutableLiveData.observe(this, new Observer<ArrayList<MovieModel>>() {
             @Override
-            public void onChanged(MovieModel mMovieModel) {
-                String name = mMovieModel.getmMoviewName();
-                String date = mMovieModel.getmMoviewDate();
-                String description = mMovieModel.getmMoviewDescription();
-                binding.tvname.setText(name);
-                binding.tvdate.setText(date);
-                binding.tvdispcription.setText(description);
+            public void onChanged(ArrayList<MovieModel> movieModels) {
+                adapter.setArrayList(movieModels);
             }
         });
 
